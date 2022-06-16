@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Epic extends Task {
     private String status = "NEW";
@@ -8,8 +9,21 @@ public class Epic extends Task {
         super(name, description);
     }
 
+    @Override
+    public String toString() {
+        return "Epic{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", status='" + status + '\'' +
+                ", subtasks='" + subtasks + '\'' + '}';
+    }
+
     public ArrayList<Subtask> getSubtasks() {
         return subtasks;
+    }
+
+    public void addSubtask(Subtask subtask) {
+        subtasks.add(subtask);
     }
 
     public void setActualStatus() {

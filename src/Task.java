@@ -7,13 +7,20 @@ public class Task {
     public Task(String name, String description, String status) {
         this.name = name;
         this.description = description;
-//        this.id = taskManager.getId();
         this.status = status;
     }
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", status=" + status + '\'' + '}';
     }
 
     public int getId() {

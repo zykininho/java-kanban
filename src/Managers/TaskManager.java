@@ -1,3 +1,6 @@
+package Managers;
+
+import Tasks.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -53,15 +56,15 @@ public class TaskManager {
     }
 
     public void add(Task task) {
-        task.id = ++this.id;
+        task.setId(++this.id);
         tasks.put(task.getId(), task);
     }
 
     public void add(Subtask subtask) {
-        subtask.id = ++this.id;
+        subtask.setId(++this.id);
         subtasks.put(subtask.getId(), subtask);
         int epicId = subtask.getEpicId();
-        if (!(epicId == 0)) {
+        if (epicId != 0) {
             Epic epic = getEpicById(epicId);
             epic.addSubtask(subtask);
             epic.setActualStatus();
@@ -69,7 +72,7 @@ public class TaskManager {
     }
 
     public void add(Epic epic) {
-        epic.id = ++this.id;
+        epic.setId(++this.id);
         epics.put(epic.getId(), epic);
         epic.setActualStatus();
     }

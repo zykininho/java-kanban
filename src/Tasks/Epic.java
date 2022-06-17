@@ -1,3 +1,5 @@
+package Tasks;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -34,9 +36,10 @@ public class Epic extends Task {
             return;
         }
         for (Subtask subtask : subtasks) {
-            if (subtask.status.equals("NEW")) {
+            String statusSubtask = subtask.getStatus();
+            if (statusSubtask.equals("NEW")) {
                 subtasksStatusNew = true;
-            } else if (subtask.status.equals("DONE")) {
+            } else if (statusSubtask.equals("DONE")) {
                 subtasksStatusDone = true;
             }
         }

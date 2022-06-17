@@ -1,3 +1,5 @@
+package Tasks;
+
 public class Subtask extends Task {
     private int epicId;
 
@@ -18,5 +20,4 @@ public class Subtask extends Task {
     public int getEpicId() {
         return epicId;
     }
-
 }

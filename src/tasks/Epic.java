@@ -1,7 +1,6 @@
-package Tasks;
+package tasks;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Epic extends Task {
     private String status = "NEW";

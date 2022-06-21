@@ -1,9 +1,11 @@
 package tasks;
 
+import managers.Status;
+
 import java.util.ArrayList;
 
 public class Epic extends Task {
-    private String status = "NEW";
+    private Status status = Status.NEW;
     private ArrayList<Subtask> subtasks = new ArrayList<>();
 
     public Epic(String name, String description) {
@@ -31,23 +33,23 @@ public class Epic extends Task {
         boolean subtasksStatusNew = false;
         boolean subtasksStatusDone = false;
         if (subtasks.size() == 0) {
-            this.status = "NEW";
+            this.status = Status.NEW;
             return;
         }
         for (Subtask subtask : subtasks) {
-            String statusSubtask = subtask.getStatus();
-            if (statusSubtask.equals("NEW")) {
+            Status statusSubtask = subtask.getStatus();
+            if (statusSubtask == Status.NEW) {
                 subtasksStatusNew = true;
-            } else if (statusSubtask.equals("DONE")) {
+            } else if (statusSubtask == Status.DONE) {
                 subtasksStatusDone = true;
             }
         }
         if (subtasksStatusNew && !subtasksStatusDone) {
-            this.status = "NEW";
+            this.status = Status.NEW;
         } else if (!subtasksStatusNew && subtasksStatusDone) {
-            this.status = "DONE";
+            this.status = Status.DONE;
         } else {
-            this.status = "IN_PROGRESS";
+            this.status = Status.IN_PROGRESS;
         }
     }
 }

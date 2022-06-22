@@ -1,13 +1,12 @@
 package managers;
 
 import tasks.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public interface TaskManager {
 
-    public long getId();
+    public int getId();
 
     public HashMap<Integer, Task> getTasks();
 
@@ -44,8 +43,6 @@ public interface TaskManager {
     public void deleteSubtaskById(int id);
 
     public void deleteEpicById(int id);
-
-    public ArrayList<Subtask> getSubtasksOfEpic(Epic epic);
 
     public List<Task> getHistory();
 

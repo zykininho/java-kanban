@@ -4,7 +4,7 @@ import tasks.*;
 public class Main {
 
     public static void main(String[] args) {
-        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+        TaskManager inMemoryTaskManager = Managers.getDefault();
 
         System.out.println("Создадим задачи разных типов");
         Task task1 = new Task("First task", "Test", Status.NEW);

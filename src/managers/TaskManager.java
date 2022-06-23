@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface TaskManager {
 
-    public int getId();
-
     public HashMap<Integer, Task> getTasks();
 
     public HashMap<Integer, Subtask> getSubtasks();

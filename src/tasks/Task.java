@@ -1,8 +1,10 @@
 package tasks;
 
-import managers.Status;
+import enums.Status;
 
 public class Task {
+    // Владимир, здесь было замечание про модификаторы доступа, у этого класса есть наследники Epic и Subtask,
+    // поэтому был выбран модификатор protected
     protected String name;
     protected String description;
     protected int id;
@@ -32,7 +34,7 @@ public class Task {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setStatus(Status status) {
@@ -40,6 +42,6 @@ public class Task {
     }
 
     public Status getStatus() {
-        return status;
+        return this.status;
     }
 }

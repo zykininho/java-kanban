@@ -1,12 +1,12 @@
 package tasks;
 
-import managers.Status;
-
+import enums.Status;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task {
     private Status status = Status.NEW;
-    private ArrayList<Subtask> subtasks = new ArrayList<>();
+    private final List<Subtask> subtasks = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
@@ -21,8 +21,8 @@ public class Epic extends Task {
                 ", subtasks='" + subtasks + '\'' + '}';
     }
 
-    public ArrayList<Subtask> getSubtasks() {
-        return subtasks;
+    public List<Subtask> getSubtasks() {
+        return this.subtasks;
     }
 
     public void addSubtask(Subtask subtask) {
@@ -30,8 +30,8 @@ public class Epic extends Task {
     }
 
     public void setActualStatus() {
-        boolean subtasksStatusNew = false;
-        boolean subtasksStatusDone = false;
+        boolean statusNew = false;
+        boolean statusDone = false;
         if (subtasks.size() == 0) {
             this.status = Status.NEW;
             return;
@@ -39,14 +39,14 @@ public class Epic extends Task {
         for (Subtask subtask : subtasks) {
             Status statusSubtask = subtask.getStatus();
             if (statusSubtask == Status.NEW) {
-                subtasksStatusNew = true;
+                statusNew = true;
             } else if (statusSubtask == Status.DONE) {
-                subtasksStatusDone = true;
+                statusDone = true;
             }
         }
-        if (subtasksStatusNew && !subtasksStatusDone) {
+        if (statusNew && !statusDone) {
             this.status = Status.NEW;
-        } else if (!subtasksStatusNew && subtasksStatusDone) {
+        } else if (!statusNew && statusDone) {
             this.status = Status.DONE;
         } else {
             this.status = Status.IN_PROGRESS;

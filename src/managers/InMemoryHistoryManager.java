@@ -17,6 +17,13 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     @Override
+    public void remove(Task task) {
+        if (taskViewHistory.contains(task)) {
+            taskViewHistory.remove(task);
+        }
+    }
+
+    @Override
     public List<Task> getHistory() {
         return taskViewHistory;
     }

@@ -120,18 +120,25 @@ public class InMemoryTaskManager implements TaskManager {
         epic.setActualStatus();
     }
 
+    private void removeFromHistory(Task task) {
+        inMemoryHistoryManager.remove(task);
+    }
+
     @Override
     public void deleteTaskById(int id) {
+        removeFromHistory(getTaskById(id));
         tasks.remove(id);
     }
 
     @Override
     public void deleteSubtaskById(int id) {
+        removeFromHistory(getSubtaskById(id));
         subtasks.remove(id);
     }
 
     @Override
     public void deleteEpicById(int id) {
+        removeFromHistory(getEpicById(id));
         epics.remove(id);
     }
 

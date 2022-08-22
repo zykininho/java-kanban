@@ -1,30 +1,80 @@
 package managers;
 
+import structures.Node;
 import tasks.Task;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private final LinkedList<Task> taskViewHistory = new LinkedList<>();
+    private final CustomLinkedList<Task> customTaskViewHistory = new CustomLinkedList<>();
 
     @Override
     public void add(Task task) {
-        if (taskViewHistory.size() == 10) {
-            taskViewHistory.removeFirst();
-        }
-        taskViewHistory.add(task);
+        int id = task.getId();
+        customTaskViewHistory.removeNode(customTaskViewHistory.nodesMap.get(id));
+        customTaskViewHistory.linkLast(task);
+        customTaskViewHistory.nodesMap.put(id, customTaskViewHistory.tail);
     }
 
     @Override
     public void remove(Task task) {
-        if (taskViewHistory.contains(task)) {
-            taskViewHistory.remove(task);
-        }
+        int id = task.getId();
+        customTaskViewHistory.removeNode(customTaskViewHistory.nodesMap.get(id));
     }
 
     @Override
     public List<Task> getHistory() {
-        return taskViewHistory;
+        return customTaskViewHistory.getTasks();
+    }
+
+    private static class CustomLinkedList<T extends Task> {
+        private Node<T> head;
+        private Node<T> tail;
+        private int size = 0;
+        private final Map<Integer, Node<T>> nodesMap = new HashMap<>();
+
+
+        private void linkLast(T task) {
+            final Node<T> oldTail = tail;
+            final Node<T> newNode = new Node<>(oldTail, task, null);
+            tail = newNode;
+            if (oldTail == null)
+                head = newNode;
+            else
+                oldTail.next = newNode;
+            size++;
+        }
+
+        private List<T> getTasks() {
+            List<T> tasks = new ArrayList<>();
+            for (Node<T> node : nodesMap.values()) {
+                tasks.add(node.data);
+            }
+            return tasks;
+        }
+
+        private void removeNode(Node<T> node) {
+            if (node == null) return;
+
+            final Node<T> next = node.next;
+            final Node<T> prev = node.prev;
+
+            if (prev == null) {
+                head = next;
+            } else {
+                prev.next = next;
+                node.prev = null;
+            }
+
+            if (next == null) {
+                tail = prev;
+            } else {
+                next.prev = prev;
+                node.next = null;
+            }
+
+            node.data = null;
+            size--;
+        }
     }
 }

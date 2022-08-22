@@ -56,6 +56,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         private void removeNode(Node<T> node) {
             if (node == null) return;
 
+            final Task task = node.data;
             final Node<T> next = node.next;
             final Node<T> prev = node.prev;
 
@@ -73,6 +74,7 @@ public class InMemoryHistoryManager implements HistoryManager {
                 node.next = null;
             }
 
+            nodesMap.remove(task.getId());
             node.data = null;
             size--;
         }

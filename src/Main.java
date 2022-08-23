@@ -8,17 +8,17 @@ public class Main {
         TaskManager inMemoryTaskManager = Managers.getDefault();
 
         System.out.println("*** Создадим задачи разных типов ***");
-        Task task1 = new Task("First task", "Test", Status.NEW);
+        Task task1 = new Task("First task", "Test");
         inMemoryTaskManager.add(task1);
-        Task task2 = new Task("Second task", "Test", Status.NEW);
+        Task task2 = new Task("Second task", "Test");
         inMemoryTaskManager.add(task2);
         Epic epic1 = new Epic("First epic", "Test");
         inMemoryTaskManager.add(epic1);
-        Subtask subtask1 = new Subtask("First subtask", "Test", Status.NEW, 3);
+        Subtask subtask1 = new Subtask("First subtask", "Test", 3);
         inMemoryTaskManager.add(subtask1);
-        Subtask subtask2 = new Subtask("Second subtask", "Test", Status.NEW, 3);
+        Subtask subtask2 = new Subtask("Second subtask", "Test", 3);
         inMemoryTaskManager.add(subtask2);
-        Subtask subtask3 = new Subtask("Third subtask", "Test", Status.NEW, 3);
+        Subtask subtask3 = new Subtask("Third subtask", "Test", 3);
         inMemoryTaskManager.add(subtask3);
         Epic epic2 = new Epic("Second epic", "Test");
         inMemoryTaskManager.add(epic2);

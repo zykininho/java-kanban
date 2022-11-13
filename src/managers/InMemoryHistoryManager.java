@@ -33,7 +33,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         private int size = 0;
         private final Map<Integer, Node<T>> nodesMap = new HashMap<>();
 
-
         private void linkLast(T task) {
             final Node<T> oldTail = tail;
             final Node<T> newNode = new Node<>(oldTail, task, null);

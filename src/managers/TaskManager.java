@@ -44,4 +44,9 @@ public interface TaskManager {
 
     List<Task> getHistory();
 
+    void addToHistory(Task task);
+
+    void removeFromHistory(Task task);
+
+    void addFromFile(Task task);
 }

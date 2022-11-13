@@ -1,8 +1,12 @@
 package managers;
 
+import enums.TaskType;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
+
 import java.util.HashMap;
 import java.util.List;
-import tasks.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private int id;
@@ -20,6 +24,7 @@ public class InMemoryTaskManager implements TaskManager {
     public HashMap<Integer, Subtask> getSubtasks() {
         return subtasks;
     }
+
     @Override
     public HashMap<Integer, Epic> getEpics() {
         return epics;
@@ -66,7 +71,8 @@ public class InMemoryTaskManager implements TaskManager {
         return epic;
     }
 
-    private void addToHistory(Task task) {
+    @Override
+    public void addToHistory(Task task) {
         inMemoryHistoryManager.add(task);
     }
 
@@ -120,7 +126,8 @@ public class InMemoryTaskManager implements TaskManager {
         epic.setActualStatus();
     }
 
-    private void removeFromHistory(Task task) {
+    @Override
+    public void removeFromHistory(Task task) {
         inMemoryHistoryManager.remove(task);
     }
 
@@ -155,5 +162,25 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getHistory() {
         return inMemoryHistoryManager.getHistory();
+    }
+
+    public HistoryManager getInMemoryHistoryManager() {
+        return inMemoryHistoryManager;
+    }
+
+    @Override
+    public void addFromFile(Task task) {
+        TaskType taskType = task.getType();
+        switch (taskType) {
+            case TASK:
+                tasks.put(task.getId(), task);
+                break;
+            case EPIC:
+                epics.put(task.getId(), (Epic) task);
+                break;
+            case SUBTASK:
+                subtasks.put(task.getId(), (Subtask) task);
+                break;
+        }
     }
 }

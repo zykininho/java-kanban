@@ -1,6 +1,6 @@
 package tasks;
 
-import enums.Status;
+import enums.*;
 
 public class Task {
     // Владимир, здесь было замечание про модификаторы доступа, у этого класса есть наследники Epic и Subtask,
@@ -9,11 +9,13 @@ public class Task {
     protected String description;
     protected int id;
     protected Status status;
+    protected TaskType type;
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;
+        this.type = TaskType.TASK;
     }
 
     @Override
@@ -38,5 +40,29 @@ public class Task {
 
     public Status getStatus() {
         return this.status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public TaskType getType() {
+        return type;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setType(TaskType taskType) {
+        this.type = taskType;
     }
 }

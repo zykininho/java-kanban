@@ -23,19 +23,18 @@ id,type,name,status,description,epic
 public class CSVTaskFormat {
 
     public static String toString(Task task) {
-        String epicId = "";
-        TaskType taskType = task.getType();
-        if (taskType == TaskType.SUBTASK) {
-            Subtask subtask = (Subtask) task;
-            epicId = String.valueOf(subtask.getEpicId());
-        }
-        String value = String.format("%s,%s,%s,%s,%s,%s",
+        String value = String.format("%s,%s,%s,%s,%s",
                 task.getId(),
                 task.getType(),
                 task.getName(),
                 task.getStatus(),
-                task.getDescription(),
-                epicId);
+                task.getDescription());
+        TaskType taskType = task.getType();
+        if (taskType == TaskType.SUBTASK) {
+            Subtask subtask = (Subtask) task;
+            String epicId = String.valueOf(subtask.getEpicId());
+            value = value.concat(",").concat(epicId);
+        }
         return value;
     }
 
@@ -87,7 +86,7 @@ public class CSVTaskFormat {
         String[] listId = value.split(",");
         List<Integer> listTasks = new ArrayList<>();
         for (String id : listId) {
-            listTasks.add(Integer.valueOf(id));
+            listTasks.add(0, Integer.valueOf(id));
         }
         return listTasks;
     }

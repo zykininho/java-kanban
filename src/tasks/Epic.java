@@ -3,16 +3,30 @@ package tasks;
 import enums.Status;
 import enums.TaskType;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Epic extends Task {
     private Status status = Status.NEW;
     private final List<Subtask> subtasks = new ArrayList<>();
+    private LocalDateTime endTime;
 
     public Epic(String name, String description) {
         super(name, description);
         this.type = TaskType.EPIC;
+    }
+
+    public Epic(String name, String description, long duration, LocalDateTime startTime) {
+        super(name, description, duration, startTime);
+        this.type = TaskType.EPIC;
+    }
+
+    public Epic(String name, String description, int id, Status status, long duration, LocalDateTime startTime, Status status1, LocalDateTime endTime) {
+        super(name, description, id, status, duration, startTime);
+        this.type = TaskType.EPIC;
+        this.endTime = endTime;
     }
 
     @Override
@@ -54,5 +68,54 @@ public class Epic extends Task {
         } else {
             this.status = Status.IN_PROGRESS;
         }
+    }
+
+    public void setTime() {
+        setDuration();
+        setStartTime();
+        setEndTime();
+    }
+
+    public void setDuration() {
+        long duration = 0;
+        for (Subtask subtask : subtasks) {
+            duration += subtask.getDuration();
+        }
+        this.duration = duration;
+    }
+
+    public void setStartTime() {
+        LocalDateTime minStartTime = null;
+        for (Subtask subtask : subtasks) {
+            LocalDateTime startTimeSubtask = subtask.getStartTime();
+            if (minStartTime == null) {
+                minStartTime = startTimeSubtask;
+                continue;
+            }
+            if (startTimeSubtask.isBefore(minStartTime)) {
+                minStartTime = startTimeSubtask;
+            }
+        }
+        this.startTime = minStartTime;
+    }
+
+    public void setEndTime() {
+        LocalDateTime maxEndTime = null;
+        for (Subtask subtask : subtasks) {
+            LocalDateTime endTimeSubtask = subtask.getEndTime();
+            if (maxEndTime == null) {
+                maxEndTime = endTimeSubtask;
+                continue;
+            }
+            if (endTimeSubtask.isAfter(maxEndTime)) {
+                maxEndTime = endTimeSubtask;
+            }
+        }
+        this.endTime = maxEndTime;
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return super.getEndTime();
     }
 }

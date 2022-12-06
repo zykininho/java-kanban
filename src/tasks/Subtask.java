@@ -3,6 +3,8 @@ package tasks;
 import enums.Status;
 import enums.TaskType;
 
+import java.time.LocalDateTime;
+
 public class Subtask extends Task {
     private int epicId;
 
@@ -10,6 +12,19 @@ public class Subtask extends Task {
         super(name, description);
         this.epicId = epicId;
         this.type = TaskType.SUBTASK;
+    }
+
+    public Subtask(String name, String description, int epicId, long duration, LocalDateTime startTime) {
+        super(name, description, duration, startTime);
+        this.epicId = epicId;
+        this.type = TaskType.SUBTASK;
+    }
+
+    public Subtask(String name, String description, int id, Status status, long duration,
+                   LocalDateTime startTime, int epicId) {
+        super(name, description, id, status, duration, startTime);
+        this.type = TaskType.SUBTASK;
+        this.epicId = epicId;
     }
 
     @Override

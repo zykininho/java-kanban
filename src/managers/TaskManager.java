@@ -3,6 +3,7 @@ package managers;
 import tasks.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeSet;
 
 public interface TaskManager {
 
@@ -49,4 +50,6 @@ public interface TaskManager {
     void removeFromHistory(Task task);
 
     void addFromFile(Task task);
+
+    TreeSet<Task> getPrioritizedTasks();
 }

@@ -3,6 +3,8 @@ package managers;
 import enums.*;
 import tasks.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,20 +24,31 @@ id,type,name,status,description,epic
 
 public class CSVTaskFormat {
 
+    private static final String dateFormat = "yyyyMMddHHmmss";
+
     public static String toString(Task task) {
-        String value = String.format("%s,%s,%s,%s,%s",
-                task.getId(),
-                task.getType(),
-                task.getName(),
-                task.getStatus(),
-                task.getDescription());
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
+        String value = String.format("%s,%s,%s,%s,%s,%s,%s,%s",
+                            task.getId(),
+                            task.getType(),
+                            task.getName(),
+                            task.getStatus(),
+                            task.getDescription(),
+                            getEpicIdIfSubtask(task),
+                            task.getDuration(),
+                            dateTimeFormatter.format(task.getStartTime()));
+        return value;
+    }
+
+    private static String getEpicIdIfSubtask(Task task) {
+        String epicId = "";
         TaskType taskType = task.getType();
         if (taskType == TaskType.SUBTASK) {
             Subtask subtask = (Subtask) task;
-            String epicId = String.valueOf(subtask.getEpicId());
-            value = value.concat(",").concat(epicId);
+            epicId = String.valueOf(subtask.getEpicId());
+            return epicId;
         }
-        return value;
+        return epicId;
     }
 
     public static Task fromString(String value) {
@@ -49,16 +62,21 @@ public class CSVTaskFormat {
         if (taskType == TaskType.SUBTASK) {
             epicId = Integer.parseInt(taskProperties[5]);
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
+        long duration = Long.parseLong(taskProperties[6]);
+        LocalDateTime startTime = LocalDateTime.parse(taskProperties[7], formatter);
         Task task = null;
         switch (taskType) {
             case EPIC:
-                task = new Epic(name, description);
+                task = new Epic(name, description, duration, startTime);
+                Epic epic = (Epic) task;
+                epic.setTime();
                 break;
             case TASK:
-                task = new Task(name, description);
+                task = new Task(name, description, duration, startTime);
                 break;
             case SUBTASK:
-                task = new Subtask(name, description, epicId);
+                task = new Subtask(name, description, epicId, duration, startTime);
                 break;
         }
         task.setId(id);

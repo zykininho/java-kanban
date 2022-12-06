@@ -60,7 +60,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             HashMap<Integer, Subtask> subtasks = this.getSubtasks();
             HashMap<Integer, Epic> epics = this.getEpics();
 
-            bufferedWriter.write("id,type,name,status,description,epic");
+            bufferedWriter.write("id,type,name,status,description,epic,duration,startTime");
             for (Task task : tasks.values()) {
                 String stringTask = CSVTaskFormat.toString(task);
                 bufferedWriter.newLine();

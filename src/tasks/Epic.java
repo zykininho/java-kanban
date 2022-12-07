@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Epic extends Task {
-    private Status status = Status.NEW;
     private final List<Subtask> subtasks = new ArrayList<>();
     private LocalDateTime endTime;
 

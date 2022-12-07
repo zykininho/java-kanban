@@ -107,7 +107,7 @@ public class Task {
     }
 
     public LocalDateTime getEndTime() {
-        return startTime.plusMinutes(duration);
+        return startTime == null ? null : startTime.plusMinutes(duration);
     }
 
     public void setDuration(long duration) {

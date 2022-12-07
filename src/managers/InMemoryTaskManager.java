@@ -65,21 +65,27 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(int id) {
         Task task = tasks.get(id);
-        addToHistory(task);
+        if (!(task == null)) {
+            addToHistory(task);
+        }
         return task;
     }
 
     @Override
     public Subtask getSubtaskById(int id) {
         Subtask subtask = subtasks.get(id);
-        addToHistory(subtask);
+        if (!(subtask == null)) {
+            addToHistory(subtask);
+        }
         return subtask;
     }
 
     @Override
     public Epic getEpicById(int id) {
         Epic epic = epics.get(id);
-        addToHistory(epic);
+        if (!(epic == null)) {
+            addToHistory(epic);
+        }
         return epic;
     }
 
@@ -266,6 +272,7 @@ public class InMemoryTaskManager implements TaskManager {
         LocalDateTime taskStartTime = task.getStartTime();
         if (prioritizedTasks.isEmpty() || taskEndTime == null) return false;
         for (Task prioritizedTask : prioritizedTasks) {
+            if (task.equals(prioritizedTask)) continue;
             LocalDateTime prioritizedTaskStartTime = prioritizedTask.getStartTime();
             LocalDateTime prioritizedTaskEndTime = prioritizedTask.getEndTime();
             if (!(prioritizedTaskStartTime == null) && !(taskStartTime == null) &&

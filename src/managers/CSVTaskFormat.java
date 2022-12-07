@@ -27,7 +27,6 @@ public class CSVTaskFormat {
     private static final String dateFormat = "yyyyMMddHHmmss";
 
     public static String toString(Task task) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
         String value = String.format("%s,%s,%s,%s,%s,%s,%s,%s",
                             task.getId(),
                             task.getType(),
@@ -36,7 +35,7 @@ public class CSVTaskFormat {
                             task.getDescription(),
                             getEpicIdIfSubtask(task),
                             task.getDuration(),
-                            dateTimeFormatter.format(task.getStartTime()));
+                            getTaskStartTime(task));
         return value;
     }
 
@@ -49,6 +48,13 @@ public class CSVTaskFormat {
             return epicId;
         }
         return epicId;
+    }
+
+    private static String getTaskStartTime(Task task) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
+        LocalDateTime taskStartTime = task.getStartTime();
+        String stringStartTime = (taskStartTime == null) ? ("") : dateTimeFormatter.format(task.getStartTime());
+        return stringStartTime;
     }
 
     public static Task fromString(String value) {

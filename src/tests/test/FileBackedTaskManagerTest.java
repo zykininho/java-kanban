@@ -36,6 +36,6 @@ class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
         FileBackedTaskManager taskManager1 = FileBackedTaskManager.loadFromFile(file);
         final HashMap<Integer, Task> tasks = taskManager1.getTasks();
         assertNotNull(tasks, "Возвращает пустой список задач");
-        assertEquals(1, tasks.size(), "Возвращает пустой списко задач");
+        assertEquals(1, tasks.size(), "Возвращает пустой список задач");
     }
 }

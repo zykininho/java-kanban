@@ -2,8 +2,7 @@ package test;
 
 import managers.InMemoryTaskManager;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
+import tasks.Task;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
@@ -13,9 +12,4 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         taskManager = new InMemoryTaskManager();
         initializeTasks();
     }
-
-    /*@Test
-    public void createInMemoryTaskManager() {
-        assertNotNull(tasks, "Возвращает пустой список задач");
-    }*/
 }

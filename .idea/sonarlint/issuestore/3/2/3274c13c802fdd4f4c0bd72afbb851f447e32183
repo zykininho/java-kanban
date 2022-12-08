@@ -1,0 +1,7 @@
+
+f
+java:S12066"PThis class overrides "equals()" and should therefore also override "hashCode()".(ÜÑã
+J
+java:S1128"/Remove this unused import 'java.time.Duration'.(ëá¯‰üÿÿÿÿ
+I
+java:S1128".Remove this unused import 'java.time.Instant'.(Â‚éñÿÿÿÿÿ

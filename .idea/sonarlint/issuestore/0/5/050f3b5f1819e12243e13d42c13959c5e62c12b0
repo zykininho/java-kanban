@@ -1,0 +1,14 @@
+
+H
+java:S2160"+Override the "equals" method in this class.(‡¢ÉÎ8«§·ìÎ0
+V	java:S107"AConstructor has 8 parameters, which is greater than 7 authorized.(¿½íû
+D
+java:S1172".Remove this unused method parameter "status1".(¿½íû
+Y
+java:S11553">Use isEmpty() to check whether the collection is empty or not.(û¹Ö€şÿÿÿÿ
+C
+java:S1185u"(Remove this method to simply inherit it.(éÇºÕûÿÿÿÿ
+P
+java:S1128".Remove this unused import 'java.time.Instant'.(Â‚éñÿÿÿÿÿ8«§·ìÎ0
+M
+java:S1068"+Remove this unused "endTime" private field.(º©çÑşÿÿÿÿ8ÅÓ¯ÃÎ0

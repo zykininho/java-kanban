@@ -18,7 +18,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     protected Epic epic;
     protected Subtask subtask;
 
-    protected void initializeTasks() {
+    public void initializeTasks() {
         task = new Task("Таск 1", "Для теста", 15,
                         LocalDateTime.of(2022, 01, 01, 12, 00, 00));
         taskManager.add(task);
@@ -194,5 +194,108 @@ abstract class TaskManagerTest<T extends TaskManager> {
         subtask.setStatus(Status.IN_PROGRESS);
         taskManager.update(subtask);
         assertEquals(Status.IN_PROGRESS, epic.getStatus(), "Статус эпика не обновился");
+    }
+
+    @Test
+    public void deleteEpicById() {
+        taskManager.deleteEpicById(epic.getId());
+        HashMap<Integer, Epic> epics = taskManager.getEpics();
+        assertNotNull(epics, "Менеджер не возвращает эпики");
+        assertEquals(0, epics.size(), "Список эпиков не пустой");
+    }
+
+    @Test
+    public void deleteEpicByWrongId() {
+        taskManager.deleteEpicById(0);
+        HashMap<Integer, Epic> epics = taskManager.getEpics();
+        assertNotNull(epics, "Менеджер не возвращает эпики");
+        assertEquals(1, epics.size(), "Список эпиков пустой");
+    }
+
+    @Test
+    public void deleteSubtaskById() {
+        taskManager.deleteSubtaskById(subtask.getId());
+        HashMap<Integer, Subtask> subtasks = taskManager.getSubtasks();
+        assertNotNull(subtasks, "Менеджер не возвращает подзадачи");
+        assertEquals(0, subtasks.size(), "Список подзадач не пустой");
+    }
+
+    @Test
+    public void deleteSubtaskByWrongId() {
+        taskManager.deleteSubtaskById(0);
+        HashMap<Integer, Subtask> subtasks = taskManager.getSubtasks();
+        assertNotNull(subtasks, "Менеджер не возвращает подзадачи");
+        assertEquals(1, subtasks.size(), "Список подзадач пустой");
+    }
+
+    @Test
+    public void deleteTaskById() {
+        taskManager.deleteTaskById(task.getId());
+        HashMap<Integer, Task> tasks = taskManager.getTasks();
+        assertNotNull(tasks, "Менеджер не возвращает задачи");
+        assertEquals(0, tasks.size(), "Список задач не пустой");
+    }
+
+    @Test
+    public void deleteTaskByWrongId() {
+        taskManager.deleteTaskById(0);
+        HashMap<Integer, Task> tasks = taskManager.getTasks();
+        assertNotNull(tasks, "Менеджер не возвращает задачи");
+        assertEquals(1, tasks.size(), "Список задач пустой");
+    }
+
+    @Test
+    public void addTaskToHistory() {
+        taskManager.addToHistory(task);
+        List<Task> history = taskManager.getHistory();
+        assertNotNull(history, "Менеджер не возвращает историю");
+        assertEquals(1, history.size(), "Задачи нет в истории");
+        taskManager.addToHistory(epic);
+        history = taskManager.getHistory();
+        assertNotNull(history, "Менеджер не возвращает историю");
+        assertEquals(2, history.size(), "Задач нет в истории");
+        taskManager.addToHistory(subtask);
+        history = taskManager.getHistory();
+        assertNotNull(history, "Менеджер не возвращает историю");
+        assertEquals(3, history.size(), "Задач нет в истории");
+    }
+
+    @Test
+    public void removeFromHistory() {
+        taskManager.addToHistory(task);
+        taskManager.addToHistory(epic);
+        taskManager.addToHistory(subtask);
+        List<Task> history = taskManager.getHistory();
+        assertNotNull(history, "Менеджер не возвращает историю");
+        assertEquals(3, history.size(), "История задач пустая");
+        taskManager.removeFromHistory(task);
+        history = taskManager.getHistory();
+        assertNotNull(history, "Менеджер не возвращает историю");
+        assertEquals(2, history.size(), "История задач пустая");
+        taskManager.removeFromHistory(subtask);
+        history = taskManager.getHistory();
+        assertNotNull(history, "Менеджер не возвращает историю");
+        assertEquals(1, history.size(), "История задач пустая");
+        taskManager.removeFromHistory(epic);
+        history = taskManager.getHistory();
+        assertNotNull(history, "Менеджер не возвращает историю");
+        assertEquals(0, history.size(), "История задач пустая");
+    }
+
+    @Test
+    public void getHistoryNoAddingTasks() {
+        List<Task> history = taskManager.getHistory();
+        assertNotNull(history, "Менеджер не возвращает историю");
+        assertEquals(0, history.size(), "История задач пустая");
+    }
+
+    @Test
+    public void getHistoryWithAddingTasks() {
+        taskManager.addToHistory(task);
+        taskManager.addToHistory(epic);
+        taskManager.addToHistory(subtask);
+        List<Task> history = taskManager.getHistory();
+        assertNotNull(history, "Менеджер не возвращает историю");
+        assertEquals(3, history.size(), "История задач пустая");
     }
 }

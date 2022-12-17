@@ -21,7 +21,7 @@ class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
     protected File file;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         file = new File("tasksTest_" + dateTimeFormatter.format(LocalDateTime.now()) + ".csv");
         taskManager = new FileBackedTaskManager(file);
@@ -29,7 +29,7 @@ class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
     }
 
     @AfterEach
-    void tearDown() {
+    public void tearDown() {
         assertTrue(file.delete());
     }
 

@@ -36,12 +36,23 @@ public class HttpTaskServer {
     }
 
     public static void main(String[] args) throws IOException {
+        KVServer kvServer = new KVServer();
+        kvServer.start();
         final HttpTaskServer server = new HttpTaskServer();
         server.start();
+        server.stop();
+        kvServer.stop();
     }
 
     public void start() {
+        System.out.println("Запускаем сервер для работы с Task на порту " + PORT);
+        System.out.println("Открой в браузере http://localhost:" + PORT + "/");
+        server.start();
+    }
 
+    public void stop() {
+        server.stop(0);
+        System.out.println("Остановили сервер для работы с Task на порту " + PORT);
     }
 
     private void handler(HttpExchange exchange) {
@@ -58,6 +69,7 @@ public class HttpTaskServer {
                     }
                     final String response = gson.toJson(taskManager.getPrioritizedTasks());
                     sendText(exchange, response);
+                    break;
                 }
                 // GET /tasks/history = getHistory()
                 case "history": {
@@ -68,12 +80,15 @@ public class HttpTaskServer {
                     }
                     final String response = gson.toJson(taskManager.getHistory());
                     sendText(exchange, response);
+                    break;
                 }
                 case "task": {
                     handleTask(exchange);
+                    break;
                 }
                 case "subtask": {
                     handleSubtask(exchange);
+                    break;
                 }
                 // GET /tasks/subtask/epic/?id= = getEpicSubTasks(id)
                 case "subtask/epic": {
@@ -89,9 +104,11 @@ public class HttpTaskServer {
                     final String response = gson.toJson(subtasks);
                     System.out.println("Получили подзадачи эпика с id " + id);
                     sendText(exchange, response);
+                    break;
                 }
                 case "epic": {
                     handleEpic(exchange);
+                    break;
                 }
                 default:
                     System.out.println("Запрос неверный " + exchange.getRequestURI());

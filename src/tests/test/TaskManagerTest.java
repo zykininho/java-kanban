@@ -18,7 +18,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     protected Epic epic;
     protected Subtask subtask;
 
-    public void initializeTasks() {
+     void initializeTasks() {
         task = new Task("Таск 1", "Для теста", 15,
                         LocalDateTime.of(2022, 01, 01, 12, 00, 00));
         taskManager.add(task);

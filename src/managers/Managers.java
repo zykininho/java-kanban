@@ -3,7 +3,6 @@ package managers;
 import adapter.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import http.KVServer;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +12,7 @@ public final class Managers {
     }
 
     public static TaskManager getDefault() {
-        return new HttpTaskManager(KVServer.PORT);
+        return new HttpTaskManager();
     }
 
     public static HistoryManager getDefaultHistory() {

@@ -17,21 +17,13 @@ public class HttpTaskManager extends FileBackedTaskManager {
     private final Gson gson;
     private final KVTaskClient client;
 
-    public HttpTaskManager(int port) {
+    public HttpTaskManager() {
         super();
         gson = Managers.getGson();
-        client = new KVTaskClient(port);
+        client = new KVTaskClient("http://localhost:8078/");
     }
 
-    public static void main(String[] args) {
-        new HttpTaskManager(8080).start();
-    }
-
-    public void start() {
-        load();
-    }
-
-    private void load() {
+    public void load() {
         ArrayList<Task> tasks = gson.fromJson(client.load("tasks"), new TypeToken<ArrayList<Task>>() {
         }.getType());
         addTasks(tasks);
@@ -57,12 +49,12 @@ public class HttpTaskManager extends FileBackedTaskManager {
                     this.tasks.put(id, task);
                     prioritizedTasks.add(task);
                     break;
+                case EPIC:
+                    epics.put(id, (Epic) task);
+                    break;
                 case SUBTASK:
                     subtasks.put(id, (Subtask) task);
                     prioritizedTasks.add(task);
-                    break;
-                case EPIC:
-                    epics.put(id, (Epic) task);
                     break;
             }
         }
@@ -91,10 +83,10 @@ public class HttpTaskManager extends FileBackedTaskManager {
     protected void save() {
         String jsonTasks = gson.toJson(new ArrayList<>(tasks.values()));
         client.put("tasks", jsonTasks);
-        String jsonSubtasks = gson.toJson(new ArrayList<>(subtasks.values()));
-        client.put("subtasks", jsonSubtasks);
         String jsonEpics = gson.toJson(new ArrayList<>(epics.values()));
         client.put("epics", jsonEpics);
+        String jsonSubtasks = gson.toJson(new ArrayList<>(subtasks.values()));
+        client.put("subtasks", jsonSubtasks);
 
         String jsonHistory = gson.toJson(inMemoryHistoryManager.getHistory().stream().map(Task::getId).collect(Collectors.toList()));
         client.put("history", jsonHistory);

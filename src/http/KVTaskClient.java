@@ -13,8 +13,8 @@ public class KVTaskClient {
     private final String url;
     private final String apiToken;
 
-    public KVTaskClient(int port) {
-        url = "http://localhost:" + port + "/";
+    public KVTaskClient(String url) {
+        this.url = url;
         apiToken = register(url);
     }
 
@@ -32,6 +32,7 @@ public class KVTaskClient {
             }
             return httpResponse.body();
         } catch (IOException | InterruptedException exception) {
+            exception.printStackTrace();
             throw new ManagerSaveException("Не удалось зарегистрировать клиент");
         }
     }

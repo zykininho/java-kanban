@@ -60,8 +60,8 @@ public class InMemoryTaskManager implements TaskManager {
                 subtasks.remove(subtask.getId());
                 prioritizedTasks.removeIf(task -> task.equals(subtask));
             }
-            epics.remove(epic.getId());
         }
+        epics.clear();
     }
 
     @Override

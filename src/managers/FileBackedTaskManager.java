@@ -12,6 +12,10 @@ import java.util.List;
 public class FileBackedTaskManager extends InMemoryTaskManager {
     public File file;
 
+    public FileBackedTaskManager() {
+        this.file = null;
+    }
+
     public FileBackedTaskManager(File file) {
         this.file = file;
     }

@@ -1,0 +1,26 @@
+
+É
+java:S1192“"¬Define a constant instead of duplicating this literal "Ğ—Ğ°Ğ´Ğ°Ñ‡Ğ° %s Ğ½Ğµ Ğ¾Ğ±Ğ½Ğ¾Ğ²Ğ»ĞµĞ½Ğ° Ğ¸Ğ·-Ğ·Ğ° Ğ¿ĞµÑ€ĞµÑĞµÑ‡ĞµĞ½Ğ¸Ñ Ñ Ğ´Ñ€ÑƒĞ³Ğ¸Ğ¼Ğ¸ Ğ·Ğ°Ğ´Ğ°Ñ‡Ğ°Ğ¼Ğ¸" 3 times.(©°ˆ‰øÿÿÿÿ
+Ã
+java:S1192h"¬Define a constant instead of duplicating this literal "Ğ—Ğ°Ğ´Ğ°Ñ‡Ğ° %s Ğ½Ğµ Ğ´Ğ¾Ğ±Ğ°Ğ²Ğ»ĞµĞ½Ğ° Ğ¸Ğ·-Ğ·Ğ° Ğ¿ĞµÑ€ĞµÑĞµÑ‡ĞµĞ½Ğ¸Ñ Ñ Ğ´Ñ€ÑƒĞ³Ğ¸Ğ¼Ğ¸ Ğ·Ğ°Ğ´Ğ°Ñ‡Ğ°Ğ¼Ğ¸" 3 times.(»ø„Ó
+?
+java:S1940D")Use the opposite operator ("!=") instead.(©¿ÿ¨
+D
+java:S1940M")Use the opposite operator ("!=") instead.(Á—µ¯şÿÿÿÿ
+D
+java:S1940V")Use the opposite operator ("!=") instead.(şó˜½øÿÿÿÿ
+N	java:S106h"9Replace this use of System.out or System.err by a logger.(»ø„Ó
+N	java:S106t"9Replace this use of System.out or System.err by a logger.(»ø„Ó
+O	java:S106‡"9Replace this use of System.out or System.err by a logger.(»ø„Ó
+T	java:S106“"9Replace this use of System.out or System.err by a logger.(©°ˆ‰øÿÿÿÿ
+T	java:S106Ÿ"9Replace this use of System.out or System.err by a logger.(©°ˆ‰øÿÿÿÿ
+T	java:S106³"9Replace this use of System.out or System.err by a logger.(©°ˆ‰øÿÿÿÿ
+c
+java:S2175Ù"MA "HashMap<Integer, Subtask>" cannot contain a "Subtask" in a "Integer" type.(½ï·]
+E
+java:S1940’")Use the opposite operator ("!=") instead.(çéá„øÿÿÿÿ
+E
+java:S1940’")Use the opposite operator ("!=") instead.(çéá„øÿÿÿÿ
+V
+java:S1128
+"9Remove this unused import 'java.util.function.Predicate'.(ïÍ–¶8áØ›Ï0

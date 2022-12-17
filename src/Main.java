@@ -1,11 +1,15 @@
 import enums.Status;
+import http.KVServer;
 import managers.*;
 import tasks.*;
 
+import java.io.IOException;
+
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         TaskManager inMemoryTaskManager = Managers.getDefault();
+        new KVServer().start();
 
         System.out.println("*** Создадим задачи разных типов ***");
         Task task1 = new Task("First task", "Test");

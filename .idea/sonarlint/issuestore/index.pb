@@ -33,3 +33,9 @@ W
 'src/managers/FileBackedTaskManager.java,a\9\a970b0918ff89efb73396e0ddd35df0747f2fd59
 ]
 -src/tests/test/FileBackedTaskManagerTest.java,d\6\d62b5dff743e0ebb6cd5caaa2480521d1932e700
+S
+#src/tests/test/TaskManagerTest.java,b\b\bbae47026fb623ea30c89c70680a0c4288b30fbb
+U
+%src/managers/InMemoryTaskManager.java,2\b\2bbb42d11d5bd3bec77f32049398400c34770d1a
+[
++src/tests/test/InMemoryTaskManagerTest.java,a\a\aa8283debce7b2784d1c458bc9760bd555632034

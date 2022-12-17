@@ -1,6 +1,11 @@
 package managers;
 
-import java.io.File;
+import adapter.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import http.KVServer;
+
+import java.time.LocalDateTime;
 
 public final class Managers {
 
@@ -8,11 +13,17 @@ public final class Managers {
     }
 
     public static TaskManager getDefault() {
-//      return new InMemoryTaskManager();
-        return new FileBackedTaskManager(new File("tasks.csv"));
+        return new HttpTaskManager(KVServer.PORT);
     }
 
     public static HistoryManager getDefaultHistory() {
         return new InMemoryHistoryManager();
+    }
+
+    public static Gson getGson() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());
+        return gsonBuilder.create();
     }
 }

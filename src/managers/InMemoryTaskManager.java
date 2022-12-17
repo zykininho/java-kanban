@@ -6,19 +6,21 @@ import tasks.Subtask;
 import tasks.Task;
 
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.function.Predicate;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeSet;
 
 public class InMemoryTaskManager implements TaskManager {
-    private int id;
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private final HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
-    private final Comparator<Task> taskComparator =
+    protected int id;
+    protected final HashMap<Integer, Task> tasks = new HashMap<>();
+    protected final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    protected final HashMap<Integer, Epic> epics = new HashMap<>();
+    protected final HistoryManager inMemoryHistoryManager = Managers.getDefaultHistory();
+    protected final Comparator<Task> taskComparator =
                     Comparator.comparing(Task::getStartTime, Comparator.nullsFirst(Comparator.naturalOrder()))
                               .thenComparing(Task::getId);
-    private final TreeSet<Task> prioritizedTasks = new TreeSet<>(taskComparator);
+    protected final TreeSet<Task> prioritizedTasks = new TreeSet<>(taskComparator);
 
     @Override
     public HashMap<Integer, Task> getTasks() {
@@ -101,8 +103,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void add(Task task) {
         if (checkTaskTimeCrossing(task)) {
-            System.out.println(String.format("Задача %s не добавлена из-за пересечения с другими задачами",
-                                    task.getName()));
+            System.out.printf("Задача %s не добавлена из-за пересечения с другими задачами%n",
+                                    task.getName());
             return;
         }
         task.setId(++this.id);
@@ -113,8 +115,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void add(Subtask subtask) {
         if (checkTaskTimeCrossing(subtask)) {
-            System.out.println(String.format("Задача %s не добавлена из-за пересечения с другими задачами",
-                    subtask.getName()));
+            System.out.printf("Задача %s не добавлена из-за пересечения с другими задачами%n",
+                    subtask.getName());
             return;
         }
         subtask.setId(++this.id);
@@ -132,8 +134,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void add(Epic epic) {
         if (checkTaskTimeCrossing(epic)) {
-            System.out.println(String.format("Задача %s не добавлена из-за пересечения с другими задачами",
-                    epic.getName()));
+            System.out.printf("Задача %s не добавлена из-за пересечения с другими задачами%n",
+                    epic.getName());
             return;
         }
         epic.setId(++this.id);
@@ -144,8 +146,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void update(Task task) {
         if (checkTaskTimeCrossing(task)) {
-            System.out.println(String.format("Задача %s не обновлена из-за пересечения с другими задачами",
-                    task.getName()));
+            System.out.printf("Задача %s не обновлена из-за пересечения с другими задачами%n",
+                    task.getName());
             return;
         }
         tasks.put(task.getId(), task);
@@ -156,8 +158,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void update(Subtask subtask) {
         if (checkTaskTimeCrossing(subtask)) {
-            System.out.println(String.format("Задача %s не обновлена из-за пересечения с другими задачами",
-                    subtask.getName()));
+            System.out.printf("Задача %s не обновлена из-за пересечения с другими задачами%n",
+                    subtask.getName());
             return;
         }
         subtasks.put(subtask.getId(), subtask);
@@ -176,8 +178,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void update(Epic epic) {
         if (checkTaskTimeCrossing(epic)) {
-            System.out.println(String.format("Задача %s не обновлена из-за пересечения с другими задачами",
-                    epic.getName()));
+            System.out.printf("Задача %s не обновлена из-за пересечения с другими задачами%n",
+                    epic.getName());
             return;
         }
         epics.put(epic.getId(), epic);
@@ -214,14 +216,16 @@ public class InMemoryTaskManager implements TaskManager {
         if (epic == null) return;
         for (Subtask subtask : epic.getSubtasks()) {
             removeFromHistory(subtask);
-            subtasks.remove(subtask);
+            subtasks.remove(subtask.getId());
             prioritizedTasks.removeIf(task -> task.equals(subtask));
         }
         removeFromHistory(epic);
         epics.remove(id);
     }
 
-    public List<Subtask> getSubtasksOfEpic(Epic epic) {
+    @Override
+    public List<Subtask> getSubtasksOfEpic(int id) {
+        Epic epic = getEpic(id);
         return epic.getSubtasks();
     }
 

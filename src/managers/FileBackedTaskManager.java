@@ -20,7 +20,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         this.file = file;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         System.out.println("*** Создадим первый менеджер FileBackedTaskManager ***");
         FileBackedTaskManager fileBackedTaskManagerFirst = new FileBackedTaskManager(new File("tasks.csv"));
         System.out.println();
@@ -56,7 +56,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         System.out.println(fileBackedTaskManagerSecond.getTasks());
         System.out.println(fileBackedTaskManagerSecond.getEpics());
         System.out.println(fileBackedTaskManagerSecond.getSubtasks());
-    }
+    }*/
 
     protected void save() {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {

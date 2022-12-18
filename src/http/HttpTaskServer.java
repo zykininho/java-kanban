@@ -40,8 +40,8 @@ public class HttpTaskServer {
         kvServer.start();
         final HttpTaskServer server = new HttpTaskServer();
         server.start();
-        server.stop();
-        kvServer.stop();
+//        server.stop();
+//        kvServer.stop();
     }
 
     public void start() {

@@ -18,15 +18,15 @@ abstract class TaskManagerTest<T extends TaskManager> {
     protected Epic epic;
     protected Subtask subtask;
 
-     void initializeTasks() {
+    protected void initializeTasks() {
         task = new Task("Таск 1", "Для теста", 15,
-                        LocalDateTime.of(2022, 01, 01, 12, 00, 00));
+                        LocalDateTime.of(2022, 1, 1, 12, 0, 0));
         taskManager.add(task);
         epic = new Epic("Эпик 1", "Для теста",60,
-                        LocalDateTime.of(2022, 01, 02, 13, 00, 00));
+                        LocalDateTime.of(2022, 1, 2, 13, 0, 0));
         taskManager.add(epic);
         subtask = new Subtask("Сабтаск 1", "Для теста", epic.getId(),
-                30, LocalDateTime.of(2022, 01, 03, 14, 00, 00));
+                30, LocalDateTime.of(2022, 1, 3, 14, 0, 0));
         taskManager.add(subtask);
     }
 

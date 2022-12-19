@@ -115,9 +115,9 @@ public class Main {
         System.out.println(taskManager.getHistory());
         System.out.println();
 
-/*        kvServer.stop();
+        kvServer.stop();
         System.out.println("Сервер хранилища задач остановлен");
         httpTaskServer.stop();
-        System.out.println("Сервер работы с задачами остановлен");*/
+        System.out.println("Сервер работы с задачами остановлен");
     }
 }

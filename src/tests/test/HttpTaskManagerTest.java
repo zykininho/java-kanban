@@ -1,7 +1,6 @@
 package test;
 
 import http.KVServer;
-import http.KVTaskClient;
 import managers.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class HttpTaskManagerTest extends TaskManagerTest<HttpTaskManager> {
 
     KVServer server;
-    KVTaskClient client;
 
     {
         try {

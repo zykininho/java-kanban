@@ -21,7 +21,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     @Test
     public void checkCrossingTasksTime() {
         Task taskForChecking = new Task("Таск 2", "Для теста пересечения времени", 30,
-                LocalDateTime.of(2022, 01, 01, 12, 10, 00));
+                LocalDateTime.of(2022, 1, 1, 12, 10, 0));
         boolean isTasksTimeCrossing = taskManager.checkTaskTimeCrossing(taskForChecking);
         assertTrue(isTasksTimeCrossing, "Задачи не пересекаются по времени");
     }
@@ -29,7 +29,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
     @Test
     public void checkNotCrossingTasksTime() {
         Subtask subtaskForChecking = new Subtask("Подзадача 2", "Для теста пересечения по времени", 2, 45,
-                LocalDateTime.of(2022, 01, 03, 14, 45, 00));
+                LocalDateTime.of(2022, 1, 3, 14, 45, 0));
         boolean isTasksTimeCrossing = taskManager.checkTaskTimeCrossing(subtaskForChecking);
         assertFalse(isTasksTimeCrossing, "Задачи пересекаются по времени");
     }
@@ -42,7 +42,7 @@ class InMemoryTaskManagerTest extends TaskManagerTest<InMemoryTaskManager> {
         Task firstTask = prioritizedTasks.first();
         assertEquals(task, firstTask, "Неверная сортировка задач в списке");
         Task earliestTask = new Task("Задача 2", "Самая ранняя задача по времени", 30,
-                LocalDateTime.of(2022, 01, 01, 10, 30, 00));
+                LocalDateTime.of(2022, 1, 1, 10, 30, 0));
         taskManager.add(earliestTask);
         prioritizedTasks = taskManager.getPrioritizedTasks();
         firstTask = prioritizedTasks.first();

@@ -2,18 +2,12 @@ package test;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import exceptions.ManagerSaveException;
 import http.HttpTaskServer;
-import managers.HistoryManager;
-import managers.InMemoryHistoryManager;
-import managers.InMemoryTaskManager;
-import managers.Managers;
+import managers.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import tasks.Epic;
-import tasks.Subtask;
-import tasks.Task;
+import tasks.*;
 
 import java.io.IOException;
 import java.net.URI;
@@ -58,13 +52,13 @@ class HttpTaskServerTest {
 
     void initializeTasks() {
         task = new Task("Таск 1", "Для теста", 15,
-                LocalDateTime.of(2022, 01, 01, 12, 00, 00));
+                LocalDateTime.of(2022, 1, 1, 12, 0, 0));
         taskManager.add(task);
         epic = new Epic("Эпик 1", "Для теста",60,
-                LocalDateTime.of(2022, 01, 02, 13, 00, 00));
+                LocalDateTime.of(2022, 1, 2, 13, 0, 0));
         taskManager.add(epic);
         subtask = new Subtask("Сабтаск 1", "Для теста", epic.getId(),
-                30, LocalDateTime.of(2022, 01, 03, 14, 00, 00));
+                30, LocalDateTime.of(2022, 1, 3, 14, 0, 0));
         taskManager.add(subtask);
     }
 
@@ -115,7 +109,8 @@ class HttpTaskServerTest {
         assertEquals(200, statusCode, "Запрос создания задачи вернул ошибку");
         List<Task> tasks = new ArrayList<>(taskManager.getTasks().values());
         Task keyTask = tasks.get(0);
-        assertEquals(this.task, task, "Задачи не равны");
+        keyTask.setId(1);
+        assertEquals(this.task, keyTask, "Задачи не равны");
     }
 
     @Test
@@ -135,7 +130,7 @@ class HttpTaskServerTest {
     @Test
     public void deleteTasks() throws IOException, InterruptedException {
         Task task2 = new Task("Таск 2", "Для теста", 15,
-                LocalDateTime.of(2022, 02, 01, 13, 00, 00));
+                LocalDateTime.of(2022, 2, 1, 13, 0, 0));
         taskManager.add(task2);
         List<Task> tasks2 = new ArrayList<>(taskManager.getTasks().values());
         assertEquals(2, tasks2.size(), "Новая задача не добавлена");
@@ -219,7 +214,7 @@ class HttpTaskServerTest {
     @Test
     public void deleteEpics() throws IOException, InterruptedException {
         Epic epic2 = new Epic("Эпик 2", "Для теста",60,
-                LocalDateTime.of(2022, 04, 02, 13, 00, 00));
+                LocalDateTime.of(2022, 4, 2, 13, 0, 0));
         taskManager.add(epic2);
         List<Epic> epics2 = new ArrayList<>(taskManager.getEpics().values());
         assertEquals(2, epics2.size(), "Новый эпик не добавлен");
@@ -304,7 +299,7 @@ class HttpTaskServerTest {
     @Test
     public void deleteSubtasks() throws IOException, InterruptedException {
         Subtask subtask2 = new Subtask("Сабтаск 2", "Для теста", epic.getId(),
-                30, LocalDateTime.of(2022, 03, 03, 14, 00, 00));
+                30, LocalDateTime.of(2022, 3, 3, 14, 0, 0));
         taskManager.add(subtask2);
         List<Subtask> subtasks2 = new ArrayList<>(taskManager.getSubtasks().values());
         assertEquals(2, subtasks2.size(), "Новая подзадача не добавлена");
@@ -355,10 +350,10 @@ class HttpTaskServerTest {
     @Test
     public void getEpicSubtasksById() throws IOException, InterruptedException {
         Subtask subtask2 = new Subtask("Сабтаск 2", "Для теста", epic.getId(),
-                30, LocalDateTime.of(2022, 03, 03, 14, 00, 00));
+                30, LocalDateTime.of(2022, 3, 3, 14, 0, 0));
         taskManager.add(subtask2);
         Subtask subtask3 = new Subtask("Сабтаск 3", "Для теста", epic.getId(),
-                30, LocalDateTime.of(2022, 04, 03, 14, 00, 00));
+                30, LocalDateTime.of(2022, 4, 3, 14, 0, 0));
         taskManager.add(subtask3);
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()

@@ -40,8 +40,6 @@ public class HttpTaskServer {
         kvServer.start();
         final HttpTaskServer server = new HttpTaskServer();
         server.start();
-//        server.stop();
-//        kvServer.stop();
     }
 
     public void start() {
@@ -60,7 +58,6 @@ public class HttpTaskServer {
             System.out.println("\n/tasks: " + exchange.getRequestURI());
             final String path = exchange.getRequestURI().getPath().substring(7);
             switch (path) {
-                // GET /tasks/ = getPrioritizedTasks()
                 case "": {
                     String requestMethod = exchange.getRequestMethod();
                     if (!requestMethod.equals("GET")) {
@@ -71,7 +68,6 @@ public class HttpTaskServer {
                     sendText(exchange, response);
                     break;
                 }
-                // GET /tasks/history = getHistory()
                 case "history": {
                     String requestMethod = exchange.getRequestMethod();
                     if (!requestMethod.equals("GET")) {
@@ -90,7 +86,6 @@ public class HttpTaskServer {
                     handleSubtask(exchange);
                     break;
                 }
-                // GET /tasks/subtask/epic/?id= = getEpicSubTasks(id)
                 case "subtask/epic": {
                     String requestMethod = exchange.getRequestMethod();
                     if (!requestMethod.equals("GET")) {
@@ -125,7 +120,6 @@ public class HttpTaskServer {
         final String query = exchange.getRequestURI().getQuery();
         switch (exchange.getRequestMethod()) {
             case "GET": {
-                // GET /tasks/task/ = getTasks()
                 if (query == null) {
                     final Map<Integer, Task> tasks = taskManager.getTasks();
                     List<Task> taskList = new ArrayList<>(tasks.values());
@@ -134,7 +128,6 @@ public class HttpTaskServer {
                     sendText(exchange, response);
                     return;
                 }
-                // GET /tasks/task/?id= = getTaskById(id)
                 String paramId = query.substring(3); // получаем параметр строки ?id=
                 final int id = getIdFromParam(paramId);
                 final Task task = taskManager.getTaskById(id);
@@ -144,7 +137,6 @@ public class HttpTaskServer {
                 return;
             }
             case "POST": {
-                // POST /tasks/task/ Body: {task ..} = addTask(task), updateTask(task)
                 if (query == null) {
                     String jsonTask = new String(exchange.getRequestBody().readAllBytes(), DEFAULT_CHARSET);
                     Task task = gson.fromJson(jsonTask, Task.class);
@@ -160,14 +152,12 @@ public class HttpTaskServer {
                 }
             }
             case "DELETE": {
-                // DELETE /tasks/task/ = deleteAllTasks()
                 if (query == null) {
                     taskManager.deleteTasks();
                     System.out.println("Удалили все задачи");
                     exchange.sendResponseHeaders(200, 0);
                     return;
                 }
-                // DELETE /tasks/task/?id= = deleteTaskById(id)
                 String paramId = query.substring(3); // получаем параметр строки ?id=
                 final int id = getIdFromParam(paramId);
                 taskManager.deleteTaskById(id);
@@ -181,7 +171,6 @@ public class HttpTaskServer {
         final String query = exchange.getRequestURI().getQuery();
         switch (exchange.getRequestMethod()) {
             case "GET": {
-                // GET /tasks/epic/ = getEpics()
                 if (query == null) {
                     final Map<Integer, Epic> epics = taskManager.getEpics();
                     List<Task> taskList = new ArrayList<>(epics.values());
@@ -190,7 +179,6 @@ public class HttpTaskServer {
                     sendText(exchange, response);
                     return;
                 }
-                // GET /tasks/epic/?id= = getEpicById(id)
                 String paramId = query.substring(3); // получаем параметр строки ?id=
                 final int id = getIdFromParam(paramId);
                 final Epic epic = taskManager.getEpicById(id);
@@ -200,7 +188,6 @@ public class HttpTaskServer {
                 return;
             }
             case "POST": {
-                // POST /tasks/epic/ Body: {epic ..} = addEpic(epic), updateEpic(epic)
                 if (query == null) {
                     String jsonEpic = new String(exchange.getRequestBody().readAllBytes(), DEFAULT_CHARSET);
                     Epic epic = gson.fromJson(jsonEpic, Epic.class);
@@ -216,14 +203,12 @@ public class HttpTaskServer {
                 }
             }
             case "DELETE": {
-                // DELETE /tasks/epic/ = deleteAllEpics()
                 if (query == null) {
                     taskManager.deleteEpics();
                     System.out.println("Удалили все эпики");
                     exchange.sendResponseHeaders(200, 0);
                     return;
                 }
-                // DELETE /tasks/epic/?id= = deleteEpicById(id)
                 String paramId = query.substring(3); // получаем параметр строки ?id=
                 final int id = getIdFromParam(paramId);
                 taskManager.deleteEpicById(id);
@@ -237,7 +222,6 @@ public class HttpTaskServer {
         final String query = exchange.getRequestURI().getQuery();
         switch (exchange.getRequestMethod()) {
             case "GET": {
-                // GET /tasks/subtask/ = getSubtasks()
                 if (query == null) {
                     final Map<Integer, Subtask> subtasks = taskManager.getSubtasks();
                     List<Task> taskList = new ArrayList<>(subtasks.values());
@@ -246,7 +230,6 @@ public class HttpTaskServer {
                     sendText(exchange, response);
                     return;
                 }
-                // GET /tasks/subtask/?id= = getSubtaskById(id)
                 String paramId = query.substring(3); // получаем параметр строки ?id=
                 final int id = getIdFromParam(paramId);
                 final Subtask subtask = taskManager.getSubtaskById(id);
@@ -256,7 +239,6 @@ public class HttpTaskServer {
                 return;
             }
             case "POST": {
-                // POST /tasks/subtask/ Body: {subtask ..} = addSubtask(subtask), updateSubtask(subtask)
                 if (query == null) {
                     String jsonSubtask = new String(exchange.getRequestBody().readAllBytes(), DEFAULT_CHARSET);
                     Subtask subtask = gson.fromJson(jsonSubtask, Subtask.class);
@@ -272,14 +254,12 @@ public class HttpTaskServer {
                 }
             }
             case "DELETE": {
-                // DELETE /tasks/subtask/ = deleteAllSubtasks()
                 if (query == null) {
                     taskManager.deleteSubtasks();
                     System.out.println("Удалили все подзадачи");
                     exchange.sendResponseHeaders(200, 0);
                     return;
                 }
-                // DELETE /tasks/subtask/?id= = deleteSubtaskById(id)
                 String paramId = query.substring(3); // получаем параметр строки ?id=
                 final int id = getIdFromParam(paramId);
                 taskManager.deleteSubtaskById(id);
